@@ -1,5 +1,4 @@
 ############################################################
-## 02_calculate_TE_components.R
 ## Calculate TE decomposition components using the simulated
 ## city data and coefficient draws.
 ##

@@ -1,5 +1,4 @@
 ############################################################
-## 00_simulate_city_data.R
 ## Simulated daily city summer data for TE decomposition example
 ## No personal exposure variables are generated.
 ## Data structure:
@@ -267,7 +266,7 @@ dat$logO3 <- log(dat$O3)
 ############################################################
 
 ## Reference ozone level.
-## No heat wave days + temperature <25¡ÆC
+## No heat wave days + temperature <25Â¡Ã†C
 o3_ref_value <- median(log(dat$O3_base)[dat$HW == 0], na.rm = TRUE)
 
 dat$o3_ref <- o3_ref_value

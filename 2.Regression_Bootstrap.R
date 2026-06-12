@@ -1,11 +1,8 @@
 ############################################################
-## 01_fit_model_make_BTcoef.R
 ## Fit the outcome model and create coefficient draws
 ## for the TE decomposition example.
 ##
-## This script uses the simulated city-level daily data
-## created by 00_simulate_city_data.R.
-##
+## This script uses the simulated city-level daily data created by 1.CreateSimulationData.R
 ## No personal exposure variables are used.
 ############################################################
 

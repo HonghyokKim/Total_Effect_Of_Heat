@@ -9,9 +9,6 @@ One simulation dataset is included. With the second and third scripts, users can
 
 Please email me if you identify any errors or have questions.
 
-Update: June 17, 2026
-The current code estimates the effect of heat waves vs non-heatwaves, not the effect of high ambient temperatures. So, the fraction of interaction-related effect can be low. Code for the effect of high ambient temperatures will be added shortly.
-
 
 
 This repository provides example R code and simulated data for the paper:

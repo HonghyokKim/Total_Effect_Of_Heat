@@ -2,17 +2,6 @@
 ## 02_calculate_TE_components.R
 ## Calculate TE decomposition components using the simulated
 ## city data and coefficient draws.
-##
-## This script follows the Supplementary Materials equations
-## for binary HW + logO3.
-##
-## Important:
-##   RR_PIE does NOT multiply by HWval.
-##   The O3-mediated contrast is represented by:
-##     logO3_pred_HW - logO3_pred_NHW
-##
-## No personal exposure variables are used.
-############################################################
 
 FOLDER_NAME<-"YOUR PATH"
 ############################################################

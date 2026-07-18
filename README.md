@@ -1,6 +1,6 @@
 **Update: July 17, 2026**
 
-The previous code did not correctly implement the intended estimands. The updated code now supports two analyses:
+The previous posted hands-on example code did not correctly implement the intended estimands. This issue was limited to the example code. The updated code now supports two analyses:
 
 1. **Total effect of high ambient temperature (HAT):** for example, comparing temperature ≥25°C with temperature fixed at 25°C or below. In this analysis, the direct-effect component of HAT is represented by the direct effect of heat waves (HW) like the paper.
 2. **Total effect of heat waves:** comparing HW = 1 with HW = 0.

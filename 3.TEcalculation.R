@@ -114,6 +114,9 @@ results_year <- data.frame(
   AN_CDE = NA,
   AN_INT = NA,
   AN_PIE = NA,
+  AN_4way_CDE = NA,
+  AN_4way_INT = NA,
+  AN_4way_PIE = NA,
   AN_TE = NA
 )
 
@@ -315,7 +318,7 @@ for (nn in 1:n_sim) {
     AN_TE = NA,
     AN_4way_CDE = NA,
     AN_4way_INT = NA,
-    AN_4way_PIE = NA,
+    AN_4way_PIE = NA
   )
   
   for (yy in 2011:2020) {

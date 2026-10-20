@@ -417,7 +417,7 @@ summary_total$upper_97.5[summary_total$component == "CDE_4way"] <-
   quantile(results_total$AN_4way_CDE, probs = 0.975, na.rm = TRUE)
 
 summary_total$mean[summary_total$component == "INT_4way"] <-
-  mean(results_total$AN_INT, na.rm = TRUE)
+  mean(results_total$AN_4way_INT, na.rm = TRUE)
 summary_total$lower_2.5[summary_total$component == "INT_4way"] <-
   quantile(results_total$AN_4way_INT, probs = 0.025, na.rm = TRUE)
 summary_total$upper_97.5[summary_total$component == "INT_4way"] <-

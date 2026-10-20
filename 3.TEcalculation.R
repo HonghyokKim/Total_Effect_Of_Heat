@@ -267,7 +267,10 @@ for (nn in 1:n_sim) {
   AN_TE_daily <- death * AF_TE_daily
   AN_INT_daily <- death * AF_INF_daily
 
-  ## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is an "Additive Decomposition of AF". Below is an "Multiplicative Decomposition of AF"
+  ## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is Method 1; below is Method 2
+  ## Method 1: Direct AF-scale residual decomposition
+  ## Method 2: RR-scale four-way decomposition
+  ## converted to AF using the common denominator RR_TE
   AF_CDE_4way_daily <- kappa * (RR_CDE - 1) / RR_TE
   AF_PIE_4way_daily <- (RR_PIE - 1) / RR_TE
   AF_INT_4way_daily <- (
@@ -277,7 +280,7 @@ for (nn in 1:n_sim) {
   AN_CDE_4way_daily <- death * AF_CDE_4way_daily
   AN_PIE_4way_daily <- death * AF_PIE_4way_daily
   AN_INT_4way_daily <- death * AF_INT_4way_daily
-  ## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is an "Additive Decomposition of AF". Above is an "Multiplicative Decomposition of AF"
+  ## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is Method 1; above is Method 2
   
   
   ##########################################################
@@ -295,11 +298,13 @@ for (nn in 1:n_sim) {
   results_total$AN_PIE[nn]    <- sum(AN_PIE_daily, na.rm = TRUE)
   results_total$AN_TE[nn]     <- sum(AN_TE_daily, na.rm = TRUE)
 
-  ## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is an "Additive Decomposition of AF". Below is an "Multiplicative Decomposition of AF"
+  ## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is Method 1; below is Method 2
+  ## Method 1: Direct AF-scale residual decomposition
+  ## Method 2: RR-scale four-way decomposition
+  ## converted to AF using the common denominator RR_TE
   results_total$AN_4way_CDE[nn]    <- sum(AN_CDE_4way_daily, na.rm = TRUE)
   results_total$AN_4way_INT[nn] <- sum(AN_INT_4way_daily, na.rm = TRUE)
   results_total$AN_4way_PIE[nn]    <- sum(AN_PIE_4way_daily, na.rm = TRUE)
-  ## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is an "Additive Decomposition of AF". Above is an "Multiplicative Decomposition of AF"
   
   ##########################################################
   ## 4.10. Save year-specific results
@@ -341,7 +346,10 @@ for (nn in 1:n_sim) {
       sum(AN_TE_daily[pick], na.rm = TRUE)
 
 
-    ## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is an "Additive Decomposition of AF". Below is an "Multiplicative Decomposition of AF"
+      ## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is Method 1; below is Method 2
+      ## Method 1: Direct AF-scale residual decomposition
+      ## Method 2: RR-scale four-way decomposition
+      ## converted to AF using the common denominator RR_TE
     temp_year_result$AN_4way_CDE[row_pick] <-
       sum(AN_CDE_4way_daily[pick], na.rm = TRUE)
     
@@ -350,8 +358,6 @@ for (nn in 1:n_sim) {
     
     temp_year_result$AN_4way_PIE[row_pick] <-
       sum(AN_PIE_4way_daily[pick], na.rm = TRUE)
-    ## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is an "Additive Decomposition of AF". Above is an "Multiplicative Decomposition of AF"
-  
   }
   
   results_year[row_start:row_end, ] <- temp_year_result
@@ -408,7 +414,10 @@ summary_total$upper_97.5[summary_total$component == "TE"] <-
 
 
 
-## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is an "Additive Decomposition of AF". Below is an "Multiplicative Decomposition of AF"
+  ## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is Method 1; below is Method 2
+  ## Method 1: Direct AF-scale residual decomposition
+  ## Method 2: RR-scale four-way decomposition
+  ## converted to AF using the common denominator RR_TE
 summary_total$mean[summary_total$component == "CDE_4way"] <-
   mean(results_total$AN_4way_CDE, na.rm = TRUE)
 summary_total$lower_2.5[summary_total$component == "CDE_4way"] <-
@@ -429,7 +438,6 @@ summary_total$lower_2.5[summary_total$component == "PIE_4way"] <-
   quantile(results_total$AN_4way_PIE, probs = 0.025, na.rm = TRUE)
 summary_total$upper_97.5[summary_total$component == "PIE_4way"] <-
   quantile(results_total$AN_4way_PIE, probs = 0.975, na.rm = TRUE)
-## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is an "Additive Decomposition of AF". Above is an "Multiplicative Decomposition of AF"
 
 ############################################################
 ## 6. Save outputs

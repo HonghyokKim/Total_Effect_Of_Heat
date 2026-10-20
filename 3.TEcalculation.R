@@ -252,7 +252,8 @@ for (nn in 1:n_sim) {
   ##     + kappa * RR_INTref
   ##     + kappa * RR_INTmed
   ##     + (RR_PIE - 1)
-  
+
+
   AF_CDE_daily <- (RR_CDE - 1) / RR_CDE
   AF_PIE_daily <- (RR_PIE - 1) / RR_PIE
   AF_TE_daily <- (RR_TE - 1) / RR_TE
@@ -262,6 +263,18 @@ for (nn in 1:n_sim) {
   AN_PIE_daily <- death * AF_PIE_daily
   AN_TE_daily <- death * AF_TE_daily
   AN_INT_daily <- death * AF_INF_daily
+
+  ## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is an "Additive Decomposition of AF". Below is an "Multiplicative Decomposition of AF"
+  AF_CDE_4way_daily <- kappa * (RR_CDE - 1) / RR_TE
+  AF_PIE_4way_daily <- (RR_PIE - 1) / RR_TE
+  AF_INT_4way_daily <- (
+  RR_TE - RR_PIE - kappa * (RR_CDE - 1)
+  ) / RR_TE
+
+  AN_CDE_4way_daily <- death * AF_CDE_4way_daily
+  AN_PIE_4way_daily <- death * AF_PIE_4way_daily
+  AN_INT_4way_daily <- death * AF_INT_4way_daily
+  ## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is an "Additive Decomposition of AF". Above is an "Multiplicative Decomposition of AF"
   
   
   ##########################################################
@@ -278,6 +291,12 @@ for (nn in 1:n_sim) {
   results_total$AN_INT[nn] <- sum(AN_INT_daily, na.rm = TRUE)
   results_total$AN_PIE[nn]    <- sum(AN_PIE_daily, na.rm = TRUE)
   results_total$AN_TE[nn]     <- sum(AN_TE_daily, na.rm = TRUE)
+
+  ## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is an "Additive Decomposition of AF". Below is an "Multiplicative Decomposition of AF"
+  results_total$AN_4way_CDE[nn]    <- sum(AN_CDE_4way_daily, na.rm = TRUE)
+  results_total$AN_4way_INT[nn] <- sum(AN_INT_4way_daily, na.rm = TRUE)
+  results_total$AN_4way_PIE[nn]    <- sum(AN_PIE_4way_daily, na.rm = TRUE)
+  ## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is an "Additive Decomposition of AF". Above is an "Multiplicative Decomposition of AF"
   
   ##########################################################
   ## 4.10. Save year-specific results
@@ -293,7 +312,10 @@ for (nn in 1:n_sim) {
     AN_CDE = NA,
     AN_INT = NA,
     AN_PIE = NA,
-    AN_TE = NA
+    AN_TE = NA,
+    AN_4way_CDE = NA,
+    AN_4way_INT = NA,
+    AN_4way_PIE = NA,
   )
   
   for (yy in 2011:2020) {
@@ -314,6 +336,19 @@ for (nn in 1:n_sim) {
     
     temp_year_result$AN_TE[row_pick] <-
       sum(AN_TE_daily[pick], na.rm = TRUE)
+
+
+    ## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is an "Additive Decomposition of AF". Below is an "Multiplicative Decomposition of AF"
+    temp_year_result$AN_4way_CDE[row_pick] <-
+      sum(AN_CDE_4way_daily[pick], na.rm = TRUE)
+    
+    temp_year_result$AN_4way_INT[row_pick] <-
+      sum(AN_INT_4way_daily[pick], na.rm = TRUE)
+    
+    temp_year_result$AN_4way_PIE[row_pick] <-
+      sum(AN_PIE_4way_daily[pick], na.rm = TRUE)
+    ## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is an "Additive Decomposition of AF". Above is an "Multiplicative Decomposition of AF"
+  
   }
   
   results_year[row_start:row_end, ] <- temp_year_result
@@ -334,7 +369,7 @@ for (nn in 1:n_sim) {
 ############################################################
 
 summary_total <- data.frame(
-  component = c("CDE", "INT", "PIE", "TE"),
+  component = c("CDE", "INT", "PIE", "TE","CDE_4way", "INT_4way", "PIE_4way"),
   mean = NA,
   lower_2.5 = NA,
   upper_97.5 = NA
@@ -367,6 +402,31 @@ summary_total$lower_2.5[summary_total$component == "TE"] <-
   quantile(results_total$AN_TE, probs = 0.025, na.rm = TRUE)
 summary_total$upper_97.5[summary_total$component == "TE"] <-
   quantile(results_total$AN_TE, probs = 0.975, na.rm = TRUE)
+
+
+
+## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is an "Additive Decomposition of AF". Below is an "Multiplicative Decomposition of AF"
+summary_total$mean[summary_total$component == "CDE_4way"] <-
+  mean(results_total$AN_4way_CDE, na.rm = TRUE)
+summary_total$lower_2.5[summary_total$component == "CDE_4way"] <-
+  quantile(results_total$AN_4way_CDE, probs = 0.025, na.rm = TRUE)
+summary_total$upper_97.5[summary_total$component == "CDE_4way"] <-
+  quantile(results_total$AN_4way_CDE, probs = 0.975, na.rm = TRUE)
+
+summary_total$mean[summary_total$component == "INT_4way"] <-
+  mean(results_total$AN_INT, na.rm = TRUE)
+summary_total$lower_2.5[summary_total$component == "INT_4way"] <-
+  quantile(results_total$AN_4way_INT, probs = 0.025, na.rm = TRUE)
+summary_total$upper_97.5[summary_total$component == "INT_4way"] <-
+  quantile(results_total$AN_4way_INT, probs = 0.975, na.rm = TRUE)
+
+summary_total$mean[summary_total$component == "PIE_4way"] <-
+  mean(results_total$AN_4way_PIE, na.rm = TRUE)
+summary_total$lower_2.5[summary_total$component == "PIE_4way"] <-
+  quantile(results_total$AN_4way_PIE, probs = 0.025, na.rm = TRUE)
+summary_total$upper_97.5[summary_total$component == "PIE_4way"] <-
+  quantile(results_total$AN_4way_PIE, probs = 0.975, na.rm = TRUE)
+## IMPORTANT UPDATE (Oct 20. 2026): The earlier version is an "Additive Decomposition of AF". Above is an "Multiplicative Decomposition of AF"
 
 ############################################################
 ## 6. Save outputs

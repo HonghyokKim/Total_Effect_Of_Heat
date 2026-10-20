@@ -1,6 +1,7 @@
 **Update: Oct 20, 2026**
-Added multiplicative decomposition of attributable fractions in 3.TE_calculation.R
-
+In 3.TEcalculation.R, I added the Method 2 for estimating attributable factions.
+  ## Method 1: Direct AF-scale residual decomposition (Original method)
+  ## Method 2: RR-scale four-way decomposition (New method)
 
 **Update: July 17, 2026**
 

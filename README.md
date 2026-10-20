@@ -1,3 +1,7 @@
+**Update: Oct 20, 2026**
+Added multiplicative decomposition of attributable fractions in 3.TE_calculation.R
+
+
 **Update: July 17, 2026**
 
 The previous posted hands-on example code did not correctly implement the intended estimands. This issue was limited to the example code. The updated code now supports two analyses:
